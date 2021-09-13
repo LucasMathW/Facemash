@@ -65,7 +65,7 @@ app.post('/user/signup', async (req, res) => {
         { insertId, affectedRows } = await db.create_user(newUser),
         mkdir = promisify(fs.mkdir)
 
-      await db.query('INSERT INTO facemash-stats(user, username) VALUES(?, ?)', [ insertId, username ])
+      await db.query('INSERT INTO facemash_stats(user, username) VALUES(?, ?)', [ insertId, username ])
 
       if (affectedRows == 1){
 

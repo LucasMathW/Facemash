@@ -1,9 +1,9 @@
-*{
+* {
   padding: 0px;
   margin: 0px;
 }
 
-body{
+body {
   font-family: $family;
   background: $fb;
   font-size: 13px;
@@ -11,38 +11,38 @@ body{
   font-weight: normal;
 }
 
-a{
+a {
   text-decoration: none;
   color: $a;
   outline: none;
 }
 
-.a_disabled{
+.a_disabled {
   cursor: not-allowed !important;
   pointer-events: none !important;
   background: #6ab9e8 !important;
 }
 
-.sec_btn_disabled{
+.sec_btn_disabled {
   cursor: not-allowed !important;
   pointer-events: none !important;
   color: #d8c3c3 !important;
 }
 
-i{
+i {
   pointer-events: none;
 }
 
-hr{
+hr {
   border: 0;
   border-top: 1px solid #c1c7cd;
 }
 
-li{
+li {
   list-style: none;
 }
 
-.sec_btn{
+.sec_btn {
   border: 1px solid $ee;
   background: $fb;
   color: $dark;
@@ -51,19 +51,18 @@ li{
   font-weight: 600;
   outline: none;
 
-  &:hover{
+  &:hover {
     color: $dark;
     background-color: #fff7f7;
   }
 
-  &:focus{
+  &:focus {
     color: $dark;
     background: #f7ebeb;
   }
-
 }
 
-.tir_btn{
+.tir_btn {
   border: 1px solid $ee;
   background: $ff;
   color: $dark;
@@ -71,44 +70,45 @@ li{
   cursor: pointer;
   outline: none;
 
-  &:hover{
+  &:hover {
     color: $dark;
     background-color: #ebf4fd;
   }
 
-  &:focus{
+  &:focus {
     color: $dark;
     background-color: #ebf4fd;
   }
-
 }
 
-.a_pri{ color: $a; }
+.a_pri {
+  color: $a;
+}
 
-.overlay{
+.overlay {
   @include overlay_defaults;
   background: #000;
   opacity: 0.5 !important;
 }
 
-.hidden_overlay{
+.hidden_overlay {
   @include overlay_defaults;
   background: transparent !important;
 }
 
-.colored_overlay{
+.colored_overlay {
   @include overlay_defaults;
   background: rgb(238, 238, 238) !important;
 }
 
-.overlay-2{
+.overlay-2 {
   @include overlay_defaults;
   background: transparent;
   z-index: 20;
   display: none;
 }
 
-#hoverdiv{
+#hoverdiv {
   position: absolute;
   background: #333;
   padding: 4px 14px;
@@ -121,7 +121,7 @@ li{
   z-index: 4;
 }
 
-.handy-notify{
+.handy-notify {
   position: fixed;
   background: #333;
   left: 2%;
@@ -137,7 +137,7 @@ li{
   top: 105%;
 }
 
-.handy-tooltip-after::after{
+.handy-tooltip-after::after {
   content: "";
   position: absolute;
   width: 8px;
@@ -151,7 +151,7 @@ li{
   z-index: -1;
 }
 
-.handy-tooltip-before::before{
+.handy-tooltip-before::before {
   content: "";
   position: absolute;
   width: 8px;
@@ -165,16 +165,17 @@ li{
   z-index: -1;
 }
 
-.follow{
+.follow {
   background: $pric !important;
   border: 1px solid $pric !important;
 }
 
-.unfollow{
+.unfollow {
   background: #6ae03b !important;
   color: white !important;
   border: 1px solid #6ae03b !important;
 
-  &:focus{ background: #fbf2f2; }
-
+  &:focus {
+    background: #fbf2f2;
+  }
 }

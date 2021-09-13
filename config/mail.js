@@ -16,7 +16,7 @@ let mail = options => {
       from: `Facemash <${MAIL}>`,
       ...options
     }
-    transporter.sendMail(o, (err, res) => {
+    transporter.sendMail(o, (err) => {
       err ? reject(err) : resolve('Mail Sent!!')
     })
   })

@@ -39,6 +39,7 @@ app.post('/edit-profile', async (req, res) => {
   } else {
     req.session.username = username
     await db.query('UPDATE users SET username=?, email=?, bio=? WHERE id=?', [username, email, bio, session])
+    await db.query('UPDATE facemash_stats SET username=? WHERE user=?', [username, session])
     res.json({
       mssg: 'Profile edited!!',
       success: true

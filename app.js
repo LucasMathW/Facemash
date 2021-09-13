@@ -5,10 +5,9 @@ const
   express = require('express'),
   hbs = require('express-handlebars'),
   { env: { PORT, SESSION_SECRET_LETTER } } = process,
-  hl = require('handy-log'),
+  // hl = require('handy-log'),
   path = require('path'),
   favicon = require('serve-favicon'),
-  bodyParser = require('body-parser'),
   validator = require('express-validator'),
   session = require('client-sessions'),
   app = express()
@@ -17,23 +16,26 @@ const
 const
   { variables } = require('./config/middlewares'),
   userR = require('./routes/user_routes'),
-  facemashR = require('./routes//fm-routes'),
+  facemashR = require('./routes/fm-routes'),
   editR = require('./routes/edit-routes'),
   apiR = require('./routes/api-routes'),
   mainR = require('./routes/main-routes')
 
 // View engine
 app.engine('hbs', hbs({
-  extname: 'hbs'
+  extname: 'hbs',
+  defaultLayout: false,
+  layoutsDir: path.join(__dirname, 'views')
 }))
 app.set('view engine', 'hbs')
+app.set('views', 'views')
 
 // Middlewares
 app.use(favicon(
   path.join(__dirname, '/public/images/favicon/favicon.png')
 ))
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({
+app.use(express.json())
+app.use(express.urlencoded({
   extended: false
 }))
 app.use(validator())
@@ -57,4 +59,4 @@ app.use('/api', editR)
 app.use('/api', apiR)
 app.use('/', mainR)
 
-app.listen(PORT, () => hl.rainbow('App running..') )
+app.listen(PORT, () => console.log(`App running on port: ${PORT}`) )

@@ -38,9 +38,9 @@ export default class Home extends React.Component {
             </div>
 
             <div className='fm_main'>
-              <Card user={users[0]} against={users[1]} />
-              <span className='fm_or'>OR</span>
-              <Card user={users[1]} against={users[0]} />
+              <Card user={users[0]} against={users[1]} photo='first' />
+              <span className='fm_or'>ou</span>
+              <Card user={users[1]} against={users[0]} photo='second' />
             </div>
 
             <div className='fm_bottom'>

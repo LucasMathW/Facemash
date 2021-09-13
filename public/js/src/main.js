@@ -8,7 +8,7 @@ import { Provider } from 'react-redux'
 import store from './store/store'
 import App from './components/App'
 
-let element = document.getElementById('root')
+const element = document.getElementById('root')
 if (element) {
   ReactDOM.render(
     <Provider store={store} >

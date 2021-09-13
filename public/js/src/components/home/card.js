@@ -17,36 +17,38 @@ export default class Card extends React.Component {
   state = {
     user: {},
     against: {},
+    photo: '',
   }
 
-  componentWillReceiveProps = ({ user, against }) => {
-    this.setState({ user, against })
+  componentWillReceiveProps = ({ user, against, photo}) => {
+    this.setState({ user, against, photo })
   }
 
   vote = async e => {
     e.preventDefault()
     $('.card_select').blur().addClass('a_disabled')
 
+    console.log('STATE', this.state)
+
     let
-      { user, against } = this.state,
+      { user, against, photo } = this.state,
       { dispatch } = this.props,
-      { data: { mssg } } = await post('/api/vote', { user, against })
+      { data: { mssg } } = await post('/api/vote', { user, against, photo})
 
     $('.card_select').removeClass('a_disabled')
     Notify({ value: mssg })
     dispatch(facemash())
   }
-
   render(){
     let { user: { id, username } } = this.state
-
+    console.log('STATE:', this.state)
     return (
       <div>
         <div className='card'>
           <img src={id ? `/users/${id}/avatar.jpg` : '/images/react.png'} />
           <Link to={`/profile/${username}`} className='card_username'>{username}</Link>
           <div className='card_links'>
-            <a href='#' className='pri_btn card_select' onClick={this.vote} >Vote {username}</a>
+            <a href='#' className='pri_btn card_select' onClick={this.vote} > Vote em {username}</a>
           </div>
         </div>
       </div>
