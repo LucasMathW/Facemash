@@ -12,9 +12,67 @@ app.post('/users-for-facemash', async (req, res) => {
 
 // FOR VOTING USER IN THE FACEMASH
 app.post('/vote', async (req, res) => {
-  let { user, against } = req.body
-  await db.query('UPDATE facemash_stats SET votes=votes+1, facemash_count=facemash_count+1 WHERE user=?', [ user.id ])
-  await db.query('UPDATE facemash_stats SET facemash_count=facemash_count+1 WHERE user=?', [ against.id ])
+
+  let { user, against, photo } = req.body
+
+  const row1 = await db.query('SELECT * FROM  facemash_stats WHERE user=?', [user.id])
+  const row2 = await db.query('SELECT * FROM  facemash_stats WHERE user=?', [against.id])
+
+  const winner = photo
+
+  let rA =  row1[0].facemash_count
+  let rB =  row2[0].facemash_count
+
+  console.log('rA', rA)
+  console.log('rB', rB)
+
+  const exA = 1 / (1 + Math.pow(10, ((rB - rA)/400)))
+  console.log('axA', exA)
+  const exB = 1 / (1 + Math.pow(10, ((rA - rB)/400)))
+  console.log('axB', exB)
+
+  if(winner){
+    const k1 = row1[0].k
+    console.log('K1', k1)
+    rA = rA + k1 * (1 - exA)
+    console.log('rA', rA)
+
+    if(rA >= 0){
+      await db.query(`UPDATE facemash_stats SET facemash_count=${rA} WHERE user=${user.id}`)
+    }else{
+      await db.query('UPDATE facemash_stats SET facemash_count=0 WHERE user=?', [ user.id ])
+    }
+
+    if(rA > 2500) {
+      await db.query('UPDATE facemash_stats SET k=16 WHERE user=?', [user.id])
+    }else if(rA <= 750){
+      await db.query('UPDATE facemash_stats SET k=32 WHERE user=?', [user.id])
+    }else{
+      await db.query('UPDATE facemash_stats SET k=24 WHERE user=?', [user.id])
+    }
+
+    const k2 = row2[0].k
+    console.log('k2', k2)
+    rB = rB + k2 * (0 - exB)
+    console.log('rB', rB)
+
+    if(rB >= 0){
+      await db.query(`UPDATE facemash_stats SET facemash_count=${rB} WHERE user=${against.id}`)
+    }else{
+      await db.query(`UPDATE facemash_stats SET facemash_count=0 WHERE user=${against.id}`)
+    }
+
+    if(rB > 255) {
+      await db.query('UPDATE facemash_stats SET k=16 WHERE user=?', [against.id])
+    }else if(rB <= 75){
+      await db.query('UPDATE facemash_stats SET k=32 WHERE user=?', [against.id])
+    }else{
+      await db.query('UPDATE facemash_stats SET k=24 WHERE user=?', [against.id])
+    }
+
+    await db.query('UPDATE facemash_stats SET votes=votes+1 WHERE user=?', [user.id])
+  }
+
   res.json({ mssg: `You voted ${user.username}!!` })
 })
 
