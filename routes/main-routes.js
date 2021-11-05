@@ -13,7 +13,7 @@ app.get('/404', mw.NotLoggedIn, (req, res) => {
 })
 
 app.get('*', mw.LoggedIn, (req, res) => {
-  let options = { title: '👾😍🙋‍' }
+  let options = { title: '👾😍🙋‍🚀' }
   res.render('app', { options })
 })
 
