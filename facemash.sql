@@ -30,21 +30,23 @@ CREATE TABLE `facemash_stats` (
   `votes` int(11) NOT NULL DEFAULT '0',
   `user` int(11) NOT NULL,
   `username` varchar(32) NOT NULL,
-  `facemash_count` int(11) NOT NULL DEFAULT '0'
+  `facemash_count` int(11) NOT NULL DEFAULT '0',
+  `rating` int(11) NOT NULL DEFAULT '0',
+  `k` int(11) NOT NULL DEFAULT '40'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `facemash_stats`
 --
 
-INSERT INTO `facemash_stats` (`stats_id`, `votes`, `user`, `username`, `facemash_count`) VALUES
-(1, 0, 10, 'takkar', 0),
-(2, 3, 11, 'faiyaz', 5),
-(3, 2, 15, 'shtakkar', 3),
-(4, 1, 16, 'coldplay', 2),
-(5, 2, 17, 'gulzar', 4),
-(6, 0, 18, 'shahrukh', 1),
-(7, 1, 19, 'nobita', 3);
+INSERT INTO `facemash_stats` (`stats_id`, `votes`, `user`, `username`, `facemash_count`, `rating`, `k`) VALUES
+(1, 0, 10, 'takkar', 0, 40, 0),
+(2, 3, 11, 'faiyaz', 5, 40, 0),
+(3, 2, 15, 'shtakkar', 3, 40, 0),
+(4, 1, 16, 'coldplay', 2, 40, 0),
+(5, 2, 17, 'gulzar', 4, 40, 0),
+(6, 0, 18, 'shahrukh', 1, 40, 0),
+(7, 1, 19, 'nobita', 3, 40, 0);
 
 -- --------------------------------------------------------
 
