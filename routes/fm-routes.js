@@ -20,23 +20,24 @@ app.post('/vote', async (req, res) => {
   const row1 = await db.query('SELECT * FROM  facemash_stats WHERE user=?', [user.id])
   const row2 = await db.query('SELECT * FROM  facemash_stats WHERE user=?', [against.id])
 
-  let rA =  row1[0].rating
-  let rB =  row2[0].rating
+  let rA = row1[0].rating
+  let rB = row2[0].rating
 
-  console.log('rA', rA)
-  console.log('rB', rB)
+  console.log('rating A =>', rA)
+  console.log('rating B =>', rB)
 
-  const exA = 1 / (1 + Math.pow(10, ((rA - rB)/400)))
-  console.log('axA', exA)
-  const exB = 1 / (1 + Math.pow(10, ((rA - rB)/400)))
-  console.log('axB', exB)
+  const exA = (1 / (1 + Math.pow(10, ((rB - rA)/400)))).toFixed(3)
+  console.log('EXA =>', exA)
+
+  const exB = (1 / (1 + Math.pow(10, ((rA - rB)/400)))).toFixed(3)
+  console.log('EXB =>', exB)
 
   if(photo === 'winner'){
 
     const k1 = row1[0].k
-    console.log('K1', k1)
+    console.log('K of A:', k1)
     rA = rA + k1 * (1 - exA)
-    console.log('rA', rA)
+    console.log('rating of A:', rA)
 
     if(rA >= 0){
       await db.query(`UPDATE facemash_stats SET votes=votes+1, rating=${rA} WHERE user=${user.id}`)
@@ -53,9 +54,9 @@ app.post('/vote', async (req, res) => {
     }
 
     const k2 = row2[0].k
-    console.log('k2', k2)
+    console.log('K of B:', k2)
     rB = rB + k2 * (0 - exB)
-    console.log('rB', rB)
+    console.log('rating of B:', rB)
 
     if(rB >= 0){
       await db.query(`UPDATE facemash_stats SET votes=votes+1, rating=${rB} WHERE user=${against.id}`)
@@ -71,14 +72,16 @@ app.post('/vote', async (req, res) => {
       await db.query('UPDATE facemash_stats SET k=20 WHERE user=?', [against.id])
     }
 
+    console.log(user.username, 'is Winner!')
+
     res.json({ mssg: `You voted ${user.username}!!` })
 
   } else {
 
     const k1 = row1[0].k
-    console.log('K1', k1)
+    console.log('K of A:', k1)
     rA = rA + k1 * (0.5 - exA)
-    console.log('rA', rA)
+    console.log('rating of A:', rA)
 
     if(rA >= 0){
       await db.query(`UPDATE facemash_stats SET votes=votes+1, rating=${rA} WHERE user=${user.id}`)
@@ -95,9 +98,9 @@ app.post('/vote', async (req, res) => {
     }
 
     const k2 = row2[0].k
-    console.log('k2', k2)
+    console.log('K of B', k2)
     rB = rB + k2 * (0.5 - exB)
-    console.log('rB', rB)
+    console.log('rating of B:', rB)
 
     if(rB >= 0){
       await db.query(`UPDATE facemash_stats SET votes=votes+1, rating=${rB} WHERE user=${against.id}`)
@@ -113,7 +116,9 @@ app.post('/vote', async (req, res) => {
       await db.query('UPDATE facemash_stats SET k=20 WHERE user=?', [against.id])
     }
 
-    res.json({mssg:'Tie'})
+    console.log('DROW')
+
+    res.json({mssg:'DROW'})
 
   }
 })
